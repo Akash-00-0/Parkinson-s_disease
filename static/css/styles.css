@@ -1,75 +1,106 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
+  background-color: #f4f7f6;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Align form to top of the screen */
-  min-height: 100vh;
+}
+
+header {
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .container {
-  width: 90%;
-  max-width: 600px;
-  background: #fff;
-  color: #333;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  text-align: center;
-  overflow: visible; /* Ensure everything inside is visible */
-}
-
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #2575fc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top to avoid centering the form too much */
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px; /* Add padding around the container */
+  box-sizing: border-box;
 }
 
 form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  margin-top: 20px;
+  font-size: 1.1em;
+  overflow-y: auto; /* Ensures that the form scrolls if content exceeds the viewport */
+}
+
+.input-group {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  align-items: flex-start; /* Align form elements to the left */
+  margin-bottom: 15px;
 }
 
-label {
-  font-size: 1rem;
+.input-group label {
+  font-weight: bold;
   margin-bottom: 5px;
-  color: #333;
-  text-align: left; /* Align labels to the left */
 }
 
-input {
+.input-group input {
   padding: 10px;
-  font-size: 1rem;
+  font-size: 1em;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="text"] {
   width: 100%;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-  margin-bottom: 10px; /* Add space between input fields */
+  background-color: #f9f9f9;
 }
 
 button {
-  padding: 10px 15px;
-  background: #2575fc;
-  color: #fff;
+  background-color: #4CAF50;
+  color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 12px 20px;
+  font-size: 1.1em;
+  width: 100%;
   cursor: pointer;
-  transition: background 0.3s ease;
+  border-radius: 4px;
 }
 
 button:hover {
-  background: #1e5abe;
+  background-color: #45a049;
 }
 
 #result {
   margin-top: 20px;
-  font-size: 1.2rem;
+  font-size: 1.2em;
   font-weight: bold;
-  color: #2575fc;
+  color: #333;
+  display: none;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+      width: 100%;
+      padding: 20px;
+  }
+
+  form {
+      width: 100%;
+      padding: 15px;
+  }
+
+  .input-group input {
+      width: 100%;
+  }
+
+  button {
+      width: 100%;
+  }
 }
