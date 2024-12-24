@@ -1,63 +1,87 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
+from flask import Flask, render_template, request, jsonify
+import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+import pickle
+import sys
 
-app = Flask(__name__)
-CORS(app)
+# Import necessary functions or classes from your notebook
+from nbformat import read
+import nbformat
 
-# Train the model on startup
-def train_model():
-    # Load dataset (replace with correct path if needed)
-    data = pd.read_csv("parkinsons.csv")  # Make sure 'parkinsons.csv' is in the same directory as app.py
-    
-    # Feature selection
-    X = data.drop(columns=['status', 'name'])
-    y = data['status']
-    
-    # Train-test split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Train Random Forest Classifier
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
-    
-    # Evaluate model
-    accuracy = accuracy_score(y_test, model.predict(X_test))
-    print(f"Model trained with accuracy: {accuracy}")
-    
+# Load the Jupyter notebook model directly into the Flask app
+def load_model_from_notebook():
+    model_notebook = 'Parkinson’s_Disease.ipynb'
+
+    # Open and read the notebook
+    with open(model_notebook, 'r') as f:
+        notebook_content = nbformat.read(f, as_version=4)
+
+    # Extract the trained model from the notebook
+    model = None
+    for cell in notebook_content['cells']:
+        if cell['cell_type'] == 'code':
+            if 'model' in cell['source']:  # Assuming your model is trained in a cell containing 'model'
+                exec(cell['source'], globals())
+                model = globals().get('model', None)
+
+    if model is None:
+        raise ValueError("Model not found in the notebook")
+
     return model
 
-# Initialize the model
-model = train_model()
+# Initialize Flask app
+app = Flask(__name__)
+
+# Load the model (this will run the notebook and extract the model)
+model = load_model_from_notebook()
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get JSON data from the frontend
+        # Get the input data from the frontend (JSON)
         data = request.get_json()
-        
-        # Extract 22 features from the input data
-        features = [float(data[f'feature{i}']) for i in range(1, 23)]
-        
-        # Convert features to DataFrame for prediction
-        input_data = pd.DataFrame([features])
-        
-        # Make prediction
-        prediction = model.predict(input_data)[0]
-        prediction_label = "Positive" if prediction == 1 else "Negative"
-        
-        # Return prediction as JSON
-        return jsonify({'prediction': prediction_label})
+
+        # Make sure to receive the correct number of features (22)
+        features = np.array([
+            [
+                data['MDVP:Fo(Hz)'],  # Replace with your actual input names from the form
+                data['MDVP:Fhi(Hz)'],
+                data['MDVP:Flo(Hz)'],
+                data['MDVP:Jitter(%)'],
+                data['MDVP:Jitter(Abs)'],  # Replace with your actual input names from the form
+                data['MDVP:RAP'],
+                data['MDVP:PPQ'],
+                data['Jitter:DDP'],
+                data['MDVP:Shimmer'],  # Replace with your actual input names from the form
+                data['MDVP:Shimmer(dB)'],
+                data['Shimmer:APQ3'],
+                data['Shimmer:APQ5'],
+                data['MDVP:APQ'],  # Replace with your actual input names from the form
+                data['Shimmer:DDA'],
+                data['NHR'],
+                data['HNR'],
+                data['RPDE'],  # Replace with your actual input names from the form
+                data['DFA'],
+                data['spread1'],
+                data['spread2'],
+                data['D2'],
+                data['PPE'],
+            ]
+        ])
+
+        # Predict using the loaded model
+        prediction = model.predict(features)
+
+        # Return the prediction result
+        return jsonify({'prediction': prediction[0]})
+
     except Exception as e:
-        # Handle errors (e.g., missing or incorrect input)
-        return jsonify({'error': str(e)})
+        print(f"Error: {e}")
+        return jsonify({'prediction': 'Error in prediction'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
