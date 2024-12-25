@@ -1,75 +1,176 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: linear-gradient(to right, #6a11cb, #2575fc);
+  background: url('pexels-polina-tankilevitch-3735769.jpg') no-repeat center center fixed; /* Replace 'path/to/your/image.jpg' with the actual path */
+  background-size: cover;
   color: #fff;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align form to top of the screen */
+  align-items: flex-start;
   min-height: 100vh;
+}
+.image{
+  opacity: 80%;
+  height: 400px;
+  width: 400px;
+  background: url('brain.jpg');
+  background-size: contain;
+}
+.info-box {
+  position: fixed;
+  top: 110px; /* Adjust as needed */
+  left: 150px;
+  width: 400px; /* Adjust width as needed */
+  background: rgba(15, 15, 15, 0.8); /* Semi-transparent background */
+  color: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  z-index: 1000;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.info-box img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.info-box p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.heading {
+  background: linear-gradient(120deg, #0f0f0f, #3e3a3b);
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  border-radius: 0;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 60%);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.heading h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 2px 3px 5px rgb(0 0 0 / 70%);
+  color: #ced1d7;
 }
 
 .container {
+  opacity: 80%;
   width: 90%;
   max-width: 600px;
-  background: #fff;
   color: #333;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 10px rgb(0 0 0 / 60%);
+  padding: 30px;
   text-align: center;
-  overflow: visible; /* Ensure everything inside is visible */
+  animation: fadeIn 2s ease-in-out;
+  margin: 110px auto;
+  background: linear-gradient(120deg, #0f0f0f, #3e3a3b);
+  position: relative; /* Ensures proper positioning */
+  left: 300px; /* Shifts the container slightly to the right */
+  max-height: 70vh; /* Restricts the container height */
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 h1 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 25px;
   color: #2575fc;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  align-items: flex-start; /* Align form elements to the left */
+  gap: 5px;
+  align-items: stretch;
+  overflow-y: auto; /* Enables vertical scrolling for the form */
+  max-height: 60vh; /* Limits the height of the form */
+  padding-right: 10px; /* Adds padding for scrollbar space */
 }
 
 label {
   font-size: 1rem;
   margin-bottom: 5px;
-  color: #333;
-  text-align: left; /* Align labels to the left */
+  color: #898989;
+  text-align: left;
 }
 
 input {
   padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
   width: 100%;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
-  margin-bottom: 10px; /* Add space between input fields */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 8px rgba(37, 117, 252, 0.5);
+  outline: none;
 }
 
 button {
-  padding: 10px 15px;
-  background: #2575fc;
+  padding: 12px 20px;
+  background: linear-gradient(120deg, #2575fc, #6a11cb);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
+  text-shadow: 0 10px 10px rgb(0 0 0 / 60%);
 }
 
 button:hover {
-  background: #1e5abe;
+  background: linear-gradient(120deg, #1e5abe, #5411a3);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(1px);
 }
 
 #result {
-  margin-top: 20px;
-  font-size: 1.2rem;
+  margin-top: 25px;
+  font-size: 1.3rem;
   font-weight: bold;
   color: #2575fc;
+  text-shadow: 0 10px 10px rgb(0 0 0 / 60%);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  input, button {
+    font-size: 0.9rem;
+  }
 }
