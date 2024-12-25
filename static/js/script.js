@@ -1,26 +1,55 @@
-document.getElementById("predictionForm").addEventListener("submit", async (event) => {
-    event.preventDefault();  // Prevent form from reloading the page
+document.addEventListener('DOMContentLoaded', () => {
+  const inputContainer = document.getElementById('inputFields');
 
-    const formData = new FormData(event.target);  // Collect form data
+  // Dynamically create 22 input fields for features
+  for (let i = 1; i <= 22; i++) {
+    const label = document.createElement('label');
+    label.textContent = `Feature ${i}:`;
+    label.setAttribute('for', `feature${i}`);
 
-    try {
-        const response = await fetch("/", {
-            method: "POST",
-            body: formData,  // Send form data directly to the server
-        });
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.step = 'any'; // Allows floating-point numbers
+    input.id = `feature${i}`;
+    input.name = `feature${i}`;
+    input.required = true;
 
-        const result = await response.json();  // Parse the JSON response from the server
-        console.log(result);  // Log result to check
+    inputContainer.appendChild(label);
+    inputContainer.appendChild(input);
+    inputContainer.appendChild(document.createElement('br'));  // To separate inputs for better readability
+  }
 
-        // Display the result of the prediction in the 'result' div
-        if (result.prediction) {
-            document.getElementById("result").innerText = result.prediction;
-        } else if (result.error) {
-            document.getElementById("result").innerText = "Error: " + result.error;
-        }
+  // Handle form submission
+  document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-    } catch (error) {
-        console.error("Error:", error);  // Log any error that occurs
-        document.getElementById("result").innerText = "An error occurred. Please try again.";
+    // Collect input values
+    const features = {};
+    for (let i = 1; i <= 22; i++) {
+      features[`feature${i}`] = parseFloat(document.getElementById(`feature${i}`).value);
     }
+
+    // Send input data to the backend
+    try {
+      const response = await fetch('/predict', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(features),
+      });
+
+      const result = await response.json();
+      const resultDiv = document.getElementById('result');
+
+      if (result.prediction) {
+        resultDiv.textContent = `Prediction: ${result.prediction}`;
+        resultDiv.style.color = result.prediction === "Positive" ? "red" : "green";
+      } else {
+        resultDiv.textContent = `Error: ${result.error}`;
+        resultDiv.style.color = "red";
+      }
+    } catch (error) {
+      document.getElementById('result').textContent = 'Error: Could not connect to backend.';
+      console.error(error);
+    }
+  });
 });

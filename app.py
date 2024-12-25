@@ -13,7 +13,7 @@ def train_model():
     # Load dataset (replace with correct path if needed)
     data = pd.read_csv("parkinsons.csv")  # Make sure 'parkinsons.csv' is in the same directory as app.py
     
-    # Feature selection (make sure the columns match with the dataset)
+    # Feature selection
     X = data.drop(columns=['status', 'name'])
     y = data['status']
     
@@ -33,16 +33,9 @@ def train_model():
 # Initialize the model
 model = train_model()
 
-@app.route('/',methods=["GET", "POST"])
-def index():
-    if request.method == "POST":
-        # Handle POST request
-        # Add your prediction logic here
-        pass
-    # Handle GET request (to render the form)
-    return render_template("index.html")
-# def home():
-#     return render_template('index.html')
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -67,4 +60,4 @@ def predict():
         return jsonify({'error': str(e)})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True) 
