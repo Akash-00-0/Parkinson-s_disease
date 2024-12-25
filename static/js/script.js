@@ -1,29 +1,26 @@
-document.getElementById('predict-btn').addEventListener('click', function() {
-    // Collecting all 22 features from the input fields
-    let features = {};
-    for (let i = 1; i <= 22; i++) {
-        features[`feature${i}`] = document.getElementById(`feature${i}`).value;
-    }
+document.getElementById("predictionForm").addEventListener("submit", async (event) => {
+    event.preventDefault();  // Prevent form from reloading the page
 
-    // Sending the data to Flask backend via POST request
-    fetch('/predict', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(features),  // send the data as JSON
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Showing the prediction result
-        const resultDiv = document.getElementById('result');
-        if (data.prediction) {
-            resultDiv.innerHTML = `Prediction: ${data.prediction}`;
-        } else if (data.error) {
-            resultDiv.innerHTML = `Error: ${data.error}`;
+    const formData = new FormData(event.target);  // Collect form data
+
+    try {
+        const response = await fetch("/", {
+            method: "POST",
+            body: formData,  // Send form data directly to the server
+        });
+
+        const result = await response.json();  // Parse the JSON response from the server
+        console.log(result);  // Log result to check
+
+        // Display the result of the prediction in the 'result' div
+        if (result.prediction) {
+            document.getElementById("result").innerText = result.prediction;
+        } else if (result.error) {
+            document.getElementById("result").innerText = "Error: " + result.error;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+
+    } catch (error) {
+        console.error("Error:", error);  // Log any error that occurs
+        document.getElementById("result").innerText = "An error occurred. Please try again.";
+    }
 });

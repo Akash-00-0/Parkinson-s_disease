@@ -33,9 +33,16 @@ def train_model():
 # Initialize the model
 model = train_model()
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+@app.route('/',methods=["GET", "POST"])
+def index():
+    if request.method == "POST":
+        # Handle POST request
+        # Add your prediction logic here
+        pass
+    # Handle GET request (to render the form)
+    return render_template("index.html")
+# def home():
+#     return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():

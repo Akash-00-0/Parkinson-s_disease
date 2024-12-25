@@ -12,7 +12,7 @@
 <body>
   <div class="container">
     <h1>Parkinson’s Disease Prediction</h1>
-    <form id="predictionForm" method="post">
+    <form id="predictionForm" method="POST">
       <div class="input-group">
         <label for="MDVP:Fo(Hz)">MDVP:Fo(Hz): </label>
         <input type="text" id="fo" name="MDVP:Fo(Hz)" required>
@@ -104,9 +104,8 @@
       <button type="submit">Predict</button>
     </form>
   </div>
-  <div id="result">
-    <h2 id="predictionResult"></h2>
-  </div>
+  <div id="result"></div>
+
 
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
