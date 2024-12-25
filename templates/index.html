@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,106 +8,81 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <link rel="icon" href="data:,">
 </head>
+
 <body>
   <div class="container">
     <h1>Parkinson's Disease Prediction</h1>
-    <form id="predictionForm">
-      <div id="inputFields">
-        <div id="inputContainer">
-          <label for="feature1">Feature 1:</label>
-          <input type="number" step="any" id="feature1" name="feature1" required>
-          <br>
-          
-          <label for="feature2">Feature 2:</label>
-          <input type="number" step="any" id="feature2" name="feature2" required>
-          <br>
-          
-          <label for="feature3">Feature 3:</label>
-          <input type="number" step="any" id="feature3" name="feature3" required>
-          <br>
-          
-          <label for="feature4">Feature 4:</label>
-          <input type="number" step="any" id="feature4" name="feature4" required>
-          <br>
-          
-          <label for="feature5">Feature 5:</label>
-          <input type="number" step="any" id="feature5" name="feature5" required>
-          <br>
-          
-          <label for="feature6">Feature 6:</label>
-          <input type="number" step="any" id="feature6" name="feature6" required>
-          <br>
-          
-          <label for="feature7">Feature 7:</label>
-          <input type="number" step="any" id="feature7" name="feature7" required>
-          <br>
-          
-          <label for="feature8">Feature 8:</label>
-          <input type="number" step="any" id="feature8" name="feature8" required>
-          <br>
-          
-          <label for="feature9">Feature 9:</label>
-          <input type="number" step="any" id="feature9" name="feature9" required>
-          <br>
-          
-          <label for="feature10">Feature 10:</label>
-          <input type="number" step="any" id="feature10" name="feature10" required>
-          <br>
-          
-          <label for="feature11">Feature 11:</label>
-          <input type="number" step="any" id="feature11" name="feature11" required>
-          <br>
-          
-          <label for="feature12">Feature 12:</label>
-          <input type="number" step="any" id="feature12" name="feature12" required>
-          <br>
-          
-          <label for="feature13">Feature 13:</label>
-          <input type="number" step="any" id="feature13" name="feature13" required>
-          <br>
-          
-          <label for="feature14">Feature 14:</label>
-          <input type="number" step="any" id="feature14" name="feature14" required>
-          <br>
-          
-          <label for="feature15">Feature 15:</label>
-          <input type="number" step="any" id="feature15" name="feature15" required>
-          <br>
-          
-          <label for="feature16">Feature 16:</label>
-          <input type="number" step="any" id="feature16" name="feature16" required>
-          <br>
-          
-          <label for="feature17">Feature 17:</label>
-          <input type="number" step="any" id="feature17" name="feature17" required>
-          <br>
-          
-          <label for="feature18">Feature 18:</label>
-          <input type="number" step="any" id="feature18" name="feature18" required>
-          <br>
-          
-          <label for="feature19">Feature 19:</label>
-          <input type="number" step="any" id="feature19" name="feature19" required>
-          <br>
-          
-          <label for="feature20">Feature 20:</label>
-          <input type="number" step="any" id="feature20" name="feature20" required>
-          <br>
-          
-          <label for="feature21">Feature 21:</label>
-          <input type="number" step="any" id="feature21" name="feature21" required>
-          <br>
-          
-          <label for="feature22">Feature 22:</label>
-          <input type="number" step="any" id="feature22" name="feature22" required>
-          <br>
-        </div>
-        
-      </div>
+    <form id="predictionForm" action="/predict" method="POST">
+          <label for="feature1">MDVP:Fo(Hz):</label>
+          <input type="number" id="feature1" name="feature1" step="any" required><br>
+
+          <label for="feature2">MDVP:Fhi(Hz):</label>
+          <input type="number" id="feature2" name="feature2" step="any" required><br>
+
+          <label for="feature3">MDVP:Flo(Hz):</label>
+          <input type="number" id="feature3" name="feature3" step="any" required><br>
+
+          <label for="feature4">MDVP:Jitter(%):</label>
+          <input type="number" id="feature4" name="feature4" step="any" required><br>
+
+          <label for="feature5">MDVP:Jitter(Abs):</label>
+          <input type="number" id="feature5" name="feature5" step="any" required><br>
+
+          <label for="feature6">MDVP:RAP:</label>
+          <input type="number" id="feature6" name="feature6" step="any" required><br>
+
+          <label for="feature7">MDVP:PPQ:</label>
+          <input type="number" id="feature7" name="feature7" step="any" required><br>
+
+          <label for="feature8">Jitter:DDP:</label>
+          <input type="number" id="feature8" name="feature8" step="any" required><br>
+
+          <label for="feature9">MDVP:Shimmer:</label>
+          <input type="number" id="feature9" name="feature9" step="any" required><br>
+
+          <label for="feature10">MDVP:Shimmer(dB):</label>
+          <input type="number" id="feature10" name="feature10" step="any" required><br>
+
+          <label for="feature11">Shimmer:APQ3:</label>
+          <input type="number" id="feature11" name="feature11" step="any" required><br>
+
+          <label for="feature12">Shimmer:APQ5:</label>
+          <input type="number" id="feature12" name="feature12" step="any" required><br>
+
+          <label for="feature13">MDVP:APQ:</label>
+          <input type="number" id="feature13" name="feature13" step="any" required><br>
+
+          <label for="feature14">Shimmer:DDA:</label>
+          <input type="number" id="feature14" name="feature14" step="any" required><br>
+
+          <label for="feature15">NHR:</label>
+          <input type="number" id="feature15" name="feature15" step="any" required><br>
+
+          <label for="feature16">HNR:</label>
+          <input type="number" id="feature16" name="feature16" step="any" required><br>
+
+          <label for="feature17">RPDE:</label>
+          <input type="number" id="feature17" name="feature17" step="any" required><br>
+
+          <label for="feature18">DFA:</label>
+          <input type="number" id="feature18" name="feature18" step="any" required><br>
+
+          <label for="feature19">spread1:</label>
+          <input type="number" id="feature19" name="feature19" step="any" required><br>
+
+          <label for="feature20">spread2:</label>
+          <input type="number" id="feature20" name="feature20" step="any" required><br>
+
+          <label for="feature21">D2:</label>
+          <input type="number" id="feature21" name="feature21" step="any" required><br>
+
+          <label for="feature22">PPE:</label>
+          <input type="number" id="feature22" name="feature22" step="any" required><br>
       <button type="submit">Predict</button>
     </form>
     <div id="result"></div>
   </div>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
