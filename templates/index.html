@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Parkinson’s Disease Prediction</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="icon" href="data:,">
 </head>
 
 <body>
   <div class="container">
     <h1>Parkinson’s Disease Prediction</h1>
-    <form id="predictionForm">
+    <form id="predictionForm" method="post">
       <div class="input-group">
         <label for="MDVP:Fo(Hz)">MDVP:Fo(Hz): </label>
         <input type="text" id="fo" name="MDVP:Fo(Hz)" required>
