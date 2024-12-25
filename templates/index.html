@@ -4,18 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Parkinson's Disease Prediction</title>
-  <link rel="stylesheet" href="static/css/styles.css">
+  <title>Parkinson’s Disease Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
-  <header>
-    <h1>Parkinson's Disease Prediction</h1>
-  </header>
-
   <div class="container">
-    <form id="input-form">
-      <!-- Replace Feature names with actual feature names from your CSV file -->
+    <h1>Parkinson’s Disease Prediction</h1>
+    <form id="predictionForm">
       <div class="input-group">
         <label for="MDVP:Fo(Hz)">MDVP:Fo(Hz): </label>
         <input type="text" id="fo" name="MDVP:Fo(Hz)" required>
@@ -106,11 +102,12 @@
       </div>
       <button type="submit">Predict</button>
     </form>
-
-    <div id="result"></div>
+  </div>
+  <div id="result">
+    <h2 id="predictionResult"></h2>
   </div>
 
-  <script src="static/js/script.js"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 
 </html>

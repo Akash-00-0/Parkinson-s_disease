@@ -1,33 +1,29 @@
-document.getElementById("input-form").addEventListener("submit", function(event) {
-    event.preventDefault();
+document.getElementById('predict-btn').addEventListener('click', function() {
+    // Collecting all 22 features from the input fields
+    let features = {};
+    for (let i = 1; i <= 22; i++) {
+        features[`feature${i}`] = document.getElementById(`feature${i}`).value;
+    }
 
-    const formData = new FormData(this);
-    const data = {};
-
-    formData.forEach((value, key) => {
-        data[key] = value;
-    });
-
-    // Log the data to ensure it is being correctly sent to the backend
-    console.log("Sending data to the backend:", data);
-
-    fetch("/predict", {
-        method: "POST",
+    // Sending the data to Flask backend via POST request
+    fetch('/predict', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(features),  // send the data as JSON
     })
     .then(response => response.json())
-    .then(result => {
-        // Log the result from the backend
-        console.log("Received result from backend:", result);
-
-        const resultDiv = document.getElementById("result");
-        resultDiv.textContent = `Prediction: ${result.prediction}`;
-        resultDiv.style.display = "block";
+    .then(data => {
+        // Showing the prediction result
+        const resultDiv = document.getElementById('result');
+        if (data.prediction) {
+            resultDiv.innerHTML = `Prediction: ${data.prediction}`;
+        } else if (data.error) {
+            resultDiv.innerHTML = `Error: ${data.error}`;
+        }
     })
     .catch(error => {
-        console.error("Error:", error);
+        console.error('Error:', error);
     });
 });
